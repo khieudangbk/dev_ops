@@ -1,0 +1,26 @@
+name: CI Mono Repo
+
+on:
+  push:
+    paths:
+      - 'inventory-service/**'
+      - 'order-service/**'
+  pull_request:
+
+jobs:
+  inventory-service:
+    if: contains(github.event.head_commit.message, 'inventory-service') || true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          cd inventory-service
+          mvn test
+
+  order-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          cd order-service
+          mvn test

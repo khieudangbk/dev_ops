@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: order-service   # inventory-service tương tự
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+  tracing:
+    sampling:
+      probability: 1.0
+
+    exporter:
+      otlp:
+        endpoint: http://tempo:4317
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
